@@ -5,7 +5,7 @@ import { autenticarToken } from '../middlewares/authMiddleware.js';
 const prisma = new PrismaClient();
 const router = express.Router();
 
-// Registrar un evento (requiere sesión activa del usuario autenticado)
+// Registrar un evento requiere sesión activa del usuario autenticado
 router.post('/', autenticarToken, async (req, res) => {
   const { tipo, timestamp, probabilidad, sesionId } = req.body || {};
 
