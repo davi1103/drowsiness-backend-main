@@ -6,8 +6,12 @@ import jwt from 'jsonwebtoken';
 const prisma = new PrismaClient();
 const router = express.Router();
 
-// Clave secreta para JWT (en producción debe ir en variable de entorno)
-const JWT_SECRET = 'mi_super_clave_secreta_123';
+// Clave secreta para JWT
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET no está definida en las variables de entorno.");
+}
 
 // Registro de usuario
 router.post('/register', async (req, res) => {
