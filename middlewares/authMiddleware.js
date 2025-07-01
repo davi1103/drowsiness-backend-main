@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'mi_super_clave_secreta_123'; // ⚠️ Deberías mover esto a variables de entorno
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 export function autenticarToken(req, res, next) {
   try {
