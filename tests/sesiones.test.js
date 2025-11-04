@@ -1,3 +1,5 @@
+// tests/sesiones.test.js
+
 import request from 'supertest';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
@@ -5,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import app from './testServer.js';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = 'mi_super_clave_secreta_123';
+const JWT_SECRET = 'mi_super_clave_ultra_segura_456';
 
 describe('📌 Pruebas de la ruta /sesiones', () => {
   let user;
@@ -13,7 +15,7 @@ describe('📌 Pruebas de la ruta /sesiones', () => {
   let sesionId;
 
   beforeAll(async () => {
-    // Elimina solo los datos de prueba (usuarios específicos)
+    // Elimina datos relacionados al usuario de prueba
     await prisma.evento.deleteMany({
       where: {
         sesion: {
@@ -38,17 +40,18 @@ describe('📌 Pruebas de la ruta /sesiones', () => {
       }
     });
 
-    // Crear usuario
+    // Crear usuario de prueba
     const hashed = await bcrypt.hash('123456', 10);
     user = await prisma.user.create({
       data: { email: 'sesion@test.com', password: hashed }
     });
 
+    // Crear token válido
     token = jwt.sign({ userId: user.id }, JWT_SECRET);
   });
 
   afterAll(async () => {
-    // Limpieza al terminar
+    // Limpieza final
     await prisma.evento.deleteMany({
       where: {
         sesion: {

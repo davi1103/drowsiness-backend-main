@@ -1,29 +1,33 @@
+// middlewares/authMiddleware.js
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET;
-
 
 export function autenticarToken(req, res, next) {
   try {
-    const authHeader = req.headers['authorization'];
-
+    // 1️⃣ Obtener el encabezado Authorization
+    const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Encabezado de autorización inválido o ausente' });
+      return res.status(403).json({ error: 'Token ausente o malformado' });
     }
 
+    // 2️⃣ Extraer el token
     const token = authHeader.split(' ')[1];
 
-    jwt.verify(token, JWT_SECRET, (err, payload) => {
-      if (err) {
-        return res.status(403).json({ error: 'Token inválido o expirado' });
-      }
+    // 3️⃣ Verificar el token con la misma clave usada en auth.js
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      console.error('❌ JWT_SECRET no está definida en .env');
+      return res.status(500).json({ error: 'Configuración del servidor inválida' });
+    }
 
-      req.userId = payload.userId;
-      next();
-    });
+    const decoded = jwt.verify(token, secret);
 
+    // 4️⃣ Asignar el ID del usuario a req.userId
+    req.userId = decoded.userId;
+
+    // 5️⃣ Continuar
+    next();
   } catch (error) {
-    console.error('❌ Error en autenticarToken:', error);
-    return res.status(500).json({ error: 'Error al verificar el token' });
+    console.error('❌ Error al verificar token:', error.message);
+    return res.status(403).json({ error: 'Token inválido o expirado' });
   }
 }

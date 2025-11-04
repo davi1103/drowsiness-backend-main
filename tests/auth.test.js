@@ -9,7 +9,6 @@ describe("\uD83D\uDD2A Rutas de autenticaci\u00f3n (/auth)", () => {
   const testEmail = "test@example.com";
   const testPassword = "123456";
 
-  // Limpia el usuario antes de cada test
   beforeEach(async () => {
     await prisma.user.deleteMany({ where: { email: testEmail } });
   });
@@ -32,7 +31,6 @@ describe("\uD83D\uDD2A Rutas de autenticaci\u00f3n (/auth)", () => {
   });
 
   test("\u274C Registro con email existente", async () => {
-    // Primero se registra correctamente
     await prisma.user.create({
       data: {
         email: testEmail,
@@ -40,7 +38,6 @@ describe("\uD83D\uDD2A Rutas de autenticaci\u00f3n (/auth)", () => {
       },
     });
 
-    // Intenta registrar con el mismo email
     const res = await request(app)
       .post("/auth/register")
       .send({ email: testEmail, password: testPassword });

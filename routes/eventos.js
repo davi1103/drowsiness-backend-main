@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/', autenticarToken, async (req, res) => {
   const { tipo, timestamp, probabilidad, sesionId } = req.body || {};
 
-  // ✅ Validaciones mínimas
+  // Validaciones mínimas
   if (!tipo || !timestamp || probabilidad === undefined || !sesionId) {
     return res.status(400).json({ error: "Faltan campos requeridos" });
   }

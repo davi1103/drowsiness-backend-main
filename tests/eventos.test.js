@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import app from './testServer.js';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = 'mi_super_clave_secreta_123';
+const JWT_SECRET = 'mi_super_clave_ultra_segura_456';
 
 describe('📌 Pruebas de la ruta /eventos', () => {
   let user;
