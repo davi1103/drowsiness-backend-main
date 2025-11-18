@@ -4,12 +4,14 @@ import dotenv from 'dotenv';
 import eventosRouter from './routes/eventos.js';
 import sesionesRouter from './routes/sesiones.js';
 import authRouter from './routes/auth.js';
+import { performanceMiddleware } from "./middlewares/performanceMiddleware.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(performanceMiddleware); // Activación global
 
 // Ruta de prueba para saber si el servidor está funcionando
 app.get('/', (req, res) => {
