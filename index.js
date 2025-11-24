@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 import eventosRouter from './routes/eventos.js';
 import sesionesRouter from './routes/sesiones.js';
 import authRouter from './routes/auth.js';
-import { performanceMiddleware } from "./middlewares/performanceMiddleware.js";
+import performanceMiddleware from "./middlewares/performanceMiddleware.js";
+
 
 dotenv.config();
 
