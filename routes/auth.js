@@ -99,8 +99,8 @@ router.post("/login", async (req, res) => {
     res.json({
       message: "Inicio de sesión exitoso.",
       token,
-      userId: usuario.id,          // 👈 agregado
-      username: usuario.username,  // 👈 alias visible
+      userId: usuario.id,
+      username: usuario.username,
     });
   } catch (error) {
     console.error("Error en login:", error);
